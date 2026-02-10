@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Be My Valentine 🖤💗</title>
+<title>Selina 🖤💗</title>
 <style>
   :root{
     --bg1:#05050a;
@@ -32,33 +32,31 @@
       linear-gradient(135deg, var(--bg1), var(--bg2));
   }
 
-  /* floating bat silhouettes */
+  /* floating bats */
   .bats{
     position:absolute; inset:0;
     pointer-events:none;
     opacity:0.35;
-    filter: drop-shadow(0 0 10px rgba(255,46,166,0.25));
   }
   .bat{
     position:absolute;
     font-size:36px;
     animation: floaty 8s ease-in-out infinite;
   }
-  .bat:nth-child(1){left:8%; top:18%; animation-duration:9s; font-size:34px;}
-  .bat:nth-child(2){left:78%; top:12%; animation-duration:11s; font-size:42px;}
-  .bat:nth-child(3){left:15%; top:72%; animation-duration:10s; font-size:30px;}
-  .bat:nth-child(4){left:82%; top:70%; animation-duration:12s; font-size:38px;}
-  .bat:nth-child(5){left:50%; top:8%;  animation-duration:13s; font-size:28px;}
+  .bat:nth-child(1){left:8%; top:18%;}
+  .bat:nth-child(2){left:78%; top:12%;}
+  .bat:nth-child(3){left:15%; top:72%;}
+  .bat:nth-child(4){left:82%; top:70%;}
+  .bat:nth-child(5){left:50%; top:8%;}
 
   @keyframes floaty{
-    0%,100%{ transform: translateY(0) rotate(-2deg); }
-    50%{ transform: translateY(-18px) rotate(2deg); }
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-18px); }
   }
 
   .card{
-    position:relative;
     width:min(440px, 92vw);
-    padding:28px 24px 22px;
+    padding:30px 24px;
     background: var(--glass);
     border:1px solid var(--border);
     border-radius:22px;
@@ -69,36 +67,21 @@
     text-align:center;
   }
 
-  .badge{
-    display:inline-flex;
-    gap:10px;
-    align-items:center;
-    padding:8px 12px;
-    border-radius:999px;
-    border:1px solid rgba(255,46,166,0.35);
-    background: rgba(0,0,0,0.25);
-    font-weight:600;
-    letter-spacing:0.2px;
-    margin-bottom:14px;
-  }
-
   .logo{
     width:64px; height:64px;
-    margin: 10px auto 12px;
+    margin: 0 auto 14px;
     border-radius:18px;
     display:flex;
     align-items:center;
     justify-content:center;
-    border:1px solid rgba(255,46,166,0.35);
+    border:1px solid var(--border);
     background: radial-gradient(circle at 30% 30%, rgba(255,46,166,0.35), rgba(0,0,0,0.2));
-    box-shadow: 0 0 25px rgba(255,46,166,0.25);
     font-size:34px;
   }
 
   h1{
-    margin: 0 0 8px;
-    font-size: 2rem;
-    line-height: 1.1;
+    margin: 0 0 10px;
+    font-size: 2.2rem;
     text-shadow: 0 0 18px rgba(255,46,166,0.25);
   }
 
@@ -109,11 +92,11 @@
   }
 
   .gif{
-    width: 200px;
-    max-width: 70vw;
+    width: 220px;
+    max-width: 75vw;
     border-radius: 18px;
     margin: 14px auto 18px;
-    border:1px solid rgba(255,46,166,0.35);
+    border:1px solid var(--border);
     box-shadow: 0 0 30px rgba(255,46,166,0.18);
     display:block;
   }
@@ -123,7 +106,6 @@
     gap:12px;
     justify-content:center;
     flex-wrap:wrap;
-    margin-top: 10px;
   }
 
   button{
@@ -133,44 +115,26 @@
     font-weight:700;
     padding:12px 20px;
     border-radius:999px;
-    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
-    user-select:none;
+    transition: transform .12s ease;
   }
 
   #yes{
     color:#0a0010;
     background: linear-gradient(135deg, var(--pink), var(--pink2));
-    box-shadow: 0 10px 24px rgba(255,46,166,0.25);
   }
-  #yes:hover{ transform: translateY(-2px); filter: brightness(1.05); }
+  #yes:hover{ transform: translateY(-2px); }
 
   #no{
     color: var(--pink2);
     background: rgba(0,0,0,0.35);
     border:1px solid rgba(255,107,214,0.35);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.35);
     position: relative;
-  }
-
-  .tiny{
-    margin-top: 12px;
-    font-size: 0.9rem;
-    opacity: 0.85;
-  }
-
-  /* little neon underline effect */
-  .glowline{
-    height: 2px;
-    width: 140px;
-    margin: 12px auto 0;
-    background: linear-gradient(90deg, transparent, var(--pink), transparent);
-    opacity: 0.75;
   }
 </style>
 </head>
 
 <body>
-  <div class="bats" aria-hidden="true">
+  <div class="bats">
     <div class="bat">🦇</div>
     <div class="bat">🦇</div>
     <div class="bat">🦇</div>
@@ -178,43 +142,39 @@
     <div class="bat">🦇</div>
   </div>
 
-  <!-- Cute background music (starts on Yes click) -->
+  <!-- Music -->
   <audio id="loveMusic" loop>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_8e8b41c4b3.mp3" type="audio/mpeg">
   </audio>
 
-  <div class="card" id="card">
-    <div class="badge">🖤💗 goth-but-cute mode</div>
+  <div class="card">
+    <div class="logo">🦇</div>
 
-    <div class="logo" title="Bat vibes">🦇</div>
-
-    <h1>Okay listen…</h1>
+    <h1>Selina</h1>
     <p>Will you be my Valentine?</p>
 
-    <img class="gif" src="https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif" alt="cute gif" />
+    <!-- Cuter Selina Kyle & Batman GIF -->
+    <img class="gif"
+      src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif"
+      alt="Selina Kyle and Batman" />
 
     <div class="buttons">
-      <button id="yes" onclick="yesClick()">YES (be fr) 💗</button>
-      <button id="no" onmouseover="moveNo()">No 😐</button>
+      <button id="yes" onclick="yesClick()">Yes 💗</button>
+      <button id="no" onclick="moveNo()" onmouseover="moveNo()">No</button>
     </div>
-
-    <div class="glowline"></div>
-    <div class="tiny">Choose wisely… I’m watching like a lil bat in the dark 🦇</div>
   </div>
 
 <script>
   function yesClick() {
     const music = document.getElementById("loveMusic");
     music.volume = 0.35;
-    music.play().catch(()=>{ /* ignore autoplay restrictions */ });
+    music.play();
 
     document.body.innerHTML = `
       <div style="
-        height:100vh; display:flex; align-items:center; justify-content:center; text-align:center;
-        color:white; padding:24px; background:
-          radial-gradient(900px 500px at 20% 10%, rgba(255,46,166,0.18), transparent 60%),
-          radial-gradient(700px 500px at 80% 90%, rgba(255,107,214,0.14), transparent 60%),
-          linear-gradient(135deg, #05050a, #120017);
+        height:100vh; display:flex; align-items:center; justify-content:center;
+        text-align:center; color:white; padding:24px;
+        background: linear-gradient(135deg, #05050a, #120017);
       ">
         <div style="
           background: rgba(255,255,255,0.08);
@@ -222,20 +182,14 @@
           border-radius:22px;
           padding:28px 24px;
           width:min(440px, 92vw);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 40px rgba(255,46,166,0.25);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.55);
           backdrop-filter: blur(10px);
         ">
-          <div style="font-size:44px; margin-bottom:8px;">🦇💗</div>
-          <img src="https://media.giphy.com/media/3oz8xKaR836UJOYeOc/giphy.gif"
-               style="width:220px; max-width:75vw; border-radius:18px; border:1px solid rgba(255,46,166,0.35);
-               box-shadow:0 0 30px rgba(255,46,166,0.18); margin: 10px auto 16px; display:block;" />
-          <h1 style="margin:0 0 8px; font-size:2rem; text-shadow:0 0 18px rgba(255,46,166,0.25);">
-            YAAAY 😭
-          </h1>
-          <p style="margin:0; font-size:1.05rem; opacity:0.95;">
-            Okay cool… you’re stuck with me now 🖤💗<br/>
-            Screenshot this & send it back 😌
-          </p>
+          <div style="font-size:44px;">🖤💗</div>
+          <img src="https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif"
+               style="width:220px;border-radius:18px;margin:12px auto;display:block;" />
+          <h1>It’s a yes 🥹</h1>
+          <p>Screenshot this & send it back 😌</p>
         </div>
       </div>
     `;
@@ -244,7 +198,7 @@
   function moveNo() {
     const noBtn = document.getElementById("no");
     noBtn.style.position = "absolute";
-    noBtn.style.left = (Math.random() * 75 + 10) + "%";
+    noBtn.style.left = (Math.random() * 70 + 10) + "%";
     noBtn.style.top  = (Math.random() * 70 + 10) + "%";
   }
 </script>
