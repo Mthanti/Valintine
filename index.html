@@ -109,6 +109,7 @@
       justify-content:center;
       flex-wrap:wrap;
       margin-top: 8px;
+      position: relative;
     }
 
     button{
@@ -135,25 +136,15 @@
       background: rgba(0,0,0,0.35);
       border:1px solid rgba(255,107,214,0.35);
       box-shadow: 0 10px 24px rgba(0,0,0,0.35);
-      position: relative;
+      position: relative; /* normal flow initially */
       white-space: nowrap;
-    }
-
-    .tiny{
-      margin-top: 10px;
-      font-size: 0.92rem;
-      opacity: 0.8;
     }
   </style>
 </head>
 
 <body>
   <div class="bats" aria-hidden="true">
-    <div class="bat">🦇</div>
-    <div class="bat">🦇</div>
-    <div class="bat">🦇</div>
-    <div class="bat">🦇</div>
-    <div class="bat">🦇</div>
+    <div class="bat">🦇</div><div class="bat">🦇</div><div class="bat">🦇</div><div class="bat">🦇</div><div class="bat">🦇</div>
   </div>
 
   <audio id="loveMusic" loop>
@@ -166,19 +157,21 @@
     <h1>Selina</h1>
     <p>Will you be my Valentine?</p>
 
+    <!-- YOUR Batman/Catwoman GIF -->
     <img class="gif"
       src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWp5cm01bW00Y2pwa2hvcDhvMHBrOTV1aDJvNnplOW91Y3VzOTJuZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/9On3IYPB56Qko/giphy.gif"
       alt="Batman and Catwoman" />
 
-    <div class="buttons">
+    <div class="buttons" id="btnWrap">
       <button id="yes">Yes 💗</button>
       <button id="no">No</button>
     </div>
-
-    
   </div>
 
   <script>
+    const BATCAT_GIF = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWp5cm01bW00Y2pwa2hvcDhvMHBrOTV1aDJvNnplOW91Y3VzOTJuZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/9On3IYPB56Qko/giphy.gif";
+    const UNDERSTAND_GIF = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnkwbzV4bjZteDBlbHhtMmdzcWFzdWh6dHdxNWdkeGQxYWEwczh5YSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ar71Hyi0ZKejXzMoNs/giphy.gif";
+
     const noLines = [
       "Im not gonna beg.",
       "Really????",
@@ -189,23 +182,89 @@
       "One more chance please 😔",
       "Last warning... click YES 💗",
       "Okay Im down bad 😭",
-      "Dont do this to me 😩"
+      "Fine. Click No then."
     ];
+
     let noIndex = 0;
+    let noCycleDone = false;
 
-    function setNoText(btn){
-      btn.textContent = noLines[noIndex % noLines.length];
-      noIndex++;
-    }
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
 
-    function moveNo(){
-      const noBtn = document.getElementById("no");
-      setNoText(noBtn);
+    function moveNoAndCycleText() {
+      if (noCycleDone) return; // once done, stop moving/changing
 
+      // Set next line
+      noBtn.textContent = noLines[noIndex];
+
+      // If this was the last line in the cycle, snap back and arm the final click
+      if (noIndex === noLines.length - 1) {
+        noCycleDone = true;
+
+        // Return to original position (normal flow)
+        noBtn.style.position = "relative";
+        noBtn.style.left = "";
+        noBtn.style.top = "";
+
+        // After cycle completes, No should NOT run away anymore.
+        return;
+      }
+
+      // Otherwise, move away
       noBtn.style.position = "absolute";
       noBtn.style.left = (Math.random() * 70 + 10) + "%";
       noBtn.style.top  = (Math.random() * 70 + 10) + "%";
+
+      noIndex++;
     }
+
+    function showUnderstandScreen() {
+      document.body.innerHTML = `
+        <div style="
+          height:100vh; display:flex; align-items:center; justify-content:center;
+          text-align:center; color:white; padding:24px;
+          background:
+            radial-gradient(900px 500px at 20% 10%, rgba(255,46,166,0.18), transparent 60%),
+            radial-gradient(700px 500px at 80% 90%, rgba(255,107,214,0.14), transparent 60%),
+            linear-gradient(135deg, #05050a, #120017);
+        ">
+          <div style="
+            background: rgba(255,255,255,0.08);
+            border:1px solid rgba(255,46,166,0.35);
+            border-radius:22px;
+            padding:28px 24px;
+            width:min(480px, 92vw);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 0 40px rgba(255,46,166,0.25);
+            backdrop-filter: blur(10px);
+          ">
+            <img src="${UNDERSTAND_GIF}"
+                 style="width:260px; max-width:82vw; border-radius:18px; border:1px solid rgba(255,46,166,0.35);
+                 box-shadow:0 0 30px rgba(255,46,166,0.18); margin: 10px auto 16px; display:block;"
+                 alt="I understand" />
+            <h1 style="margin:0 0 8px; font-size:2rem; text-shadow:0 0 18px rgba(255,46,166,0.25);">
+              I understand.
+            </h1>
+          </div>
+        </div>
+      `;
+    }
+
+    function noClickHandler() {
+      // If cycle isn't done yet, treat click like hover (mobile friendly)
+      if (!noCycleDone) {
+        moveNoAndCycleText();
+        return;
+      }
+
+      // If cycle is done, this click is the "last time" -> show understand screen
+      showUnderstandScreen();
+    }
+
+    // Hover moves it (desktop) until cycle is done
+    noBtn.addEventListener("mouseover", moveNoAndCycleText);
+
+    // Click works on mobile + final "understand" click
+    noBtn.addEventListener("click", noClickHandler);
 
     function yesClick(){
       const music = document.getElementById("loveMusic");
@@ -232,7 +291,7 @@
           ">
             <div style="font-size:44px; margin-bottom:8px;">🖤💗</div>
 
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWp5cm01bW00Y2pwa2hvcDhvMHBrOTV1aDJvNnplOW91Y3VzOTJuZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/9On3IYPB56Qko/giphy.gif"
+            <img src="${BATCAT_GIF}"
                  style="width:260px; max-width:82vw; border-radius:18px; border:1px solid rgba(255,46,166,0.35);
                  box-shadow:0 0 30px rgba(255,46,166,0.18); margin: 10px auto 16px; display:block;"
                  alt="Batman and Catwoman" />
@@ -249,14 +308,7 @@
       `;
     }
 
-    // attach behaviors
-    const noBtn = document.getElementById("no");
-    noBtn.addEventListener("mouseover", moveNo);
-    noBtn.addEventListener("click", moveNo);
-
-    const yesBtn = document.getElementById("yes");
     yesBtn.addEventListener("click", yesClick);
   </script>
 </body>
 </html>
-
